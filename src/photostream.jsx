@@ -40,13 +40,28 @@ export default class PhotoStream extends React.Component {
     throw error;
   }
 
+  mapPhotoColumns(photosToMap) {
+    const mappedPhotos = [];
+    // define number of columns
+    const columnCount = 4;
+    // We want to populate each column one at a time, can use array of arrays
+    const photoColumns = [];
+    for (let i = 0; i < columnCount; i++) {
+      mappedPhotos.push([]);
+      photoColumns.push(<PhotoColumn key={i} photos={mappedPhotos[i]} />);
+    }
+    photosToMap.photos.forEach((photo, index) => {
+      const indexToPopulate = index % columnCount;
+      mappedPhotos[indexToPopulate].push(photo);
+    });
+    return photoColumns;
+  }
+
   render() {
-    const photoTiles = this.state.photoData.photos.map((photo) =>
-      <PhotoTile {...photo} key={photo.id} />
-    );
+    const photoColumns = this.mapPhotoColumns(this.state.photoData);
     return (
       <section className="photostream-container">
-        {photoTiles}
+        {photoColumns}
       </section>
     );
   }
@@ -56,3 +71,17 @@ PhotoStream.propTypes = {
   endpoint: React.PropTypes.string.isRequired,
   consumerKey: React.PropTypes.string.isRequired,
 };
+
+
+class PhotoColumn extends React.PureComponent {
+  render() {
+    const photoTiles = this.props.photos.map((photo, index) =>
+      <PhotoTile {...photo} key={index} />
+    );
+    return (
+      <div className="photocolumn">
+        {photoTiles}
+      </div>
+    );
+  }
+}

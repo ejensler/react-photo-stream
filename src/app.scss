@@ -32,25 +32,16 @@ $topbar-height: 50px;
 }
 
 .photostream-container {
+    display: flex;
 	position: relative;
 	top: $topbar-height;
     width: 100%;
-    column-count: 2;
-    column-gap: 0;
     max-width: 1200px;
     margin: 0 auto;
     background: #efefef;
 
-    @media only screen and (min-width: 600px) {
-        column-count: 3;
-    }
-
-    @media only screen and (min-width: 900px) {
-        column-count: 4;
-    }
-
-    @media only screen and (min-width: 1200px) {
-        column-count: 5;
+    .photocolumn {
+        width: 25%;
     }
 
     .phototile {
