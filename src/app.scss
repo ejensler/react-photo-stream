@@ -1,8 +1,18 @@
 /* styles */
 
-.navbar {
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+$topbar-height: 50px;
+
+.topbar {
     width: 100%;
-    height: 50px;
+    height: $topbar-height;
     position: fixed;
     left: 0;
     top: 0;
@@ -21,7 +31,43 @@
     }
 }
 
-.app-container {
-	position: absolute;
-	top: 50px;
+.photostream-container {
+	position: relative;
+	top: $topbar-height;
+    width: 100%;
+    column-count: 2;
+    column-gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #efefef;
+
+    @media only screen and (min-width: 600px) {
+        column-count: 3;
+    }
+
+    @media only screen and (min-width: 900px) {
+        column-count: 4;
+    }
+
+    @media only screen and (min-width: 1200px) {
+        column-count: 5;
+    }
+
+    .phototile {
+        display: inline-block;
+        background: white;
+        margin: 5px;
+        padding: 20px;
+        box-shadow: 0 0 2px rgba(0,0,0,0.35);
+        opacity: 0;
+        transition: opacity 0.2s ease-in-out;
+
+        img {
+            width: 100%;
+        }
+
+        &.loaded {
+            opacity: 1;
+        }
+    }
 }
