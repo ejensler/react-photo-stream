@@ -48,7 +48,11 @@ export default class PhotoStream extends React.Component {
     const photoColumns = [];
     for (let i = 0; i < columnCount; i++) {
       mappedPhotos.push([]);
-      photoColumns.push(<PhotoColumn key={i} photos={mappedPhotos[i]} />);
+      photoColumns.push(<PhotoColumn
+        key={i}
+        photos={mappedPhotos[i]}
+        favoritesCountCallback={this.props.favoritesCountCallback}
+      />);
     }
     photosToMap.photos.forEach((photo, index) => {
       const indexToPopulate = index % columnCount;
@@ -68,6 +72,7 @@ export default class PhotoStream extends React.Component {
 }
 
 PhotoStream.propTypes = {
+  favoritesCountCallback: React.PropTypes.func.isRequired,
   endpoint: React.PropTypes.string.isRequired,
   consumerKey: React.PropTypes.string.isRequired,
 };
@@ -76,7 +81,11 @@ PhotoStream.propTypes = {
 class PhotoColumn extends React.PureComponent {
   render() {
     const photoTiles = this.props.photos.map((photo, index) =>
-      <PhotoTile {...photo} key={index} />
+      <PhotoTile
+        {...photo}
+        key={index}
+        favoritesCountCallback={this.props.favoritesCountCallback}
+      />
     );
     return (
       <div className="photocolumn">

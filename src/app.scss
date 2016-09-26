@@ -1,33 +1,48 @@
 /* styles */
 
+$topbar-height: 60px;
+
+$color-favorites: #f7346b;
+
 * {
     box-sizing: border-box;
 }
 
 body {
+    font-family: 'Roboto Slab', serif;
     margin: 0;
+    user-select: none;
 }
 
-$topbar-height: 50px;
 
 .topbar {
+    position: fixed;
+    display: table;
     width: 100%;
     height: $topbar-height;
-    position: fixed;
     left: 0;
     top: 0;
     z-index: 2;
-    background: white;
+    padding: 0 20px;
+    color: #666;
+    background: #f4f3ff;
     box-shadow: 0 5px 10px rgba(0,0,0,0.15);
 
-    > .pagelink {
-        display: inline-block;
-        position: relative;
-        padding: 15px 20px;
-        font-size: 1.4em;
-        color: blue;
-        text-decoration: none;
-        transition: all 0.2s ease-in-out;
+    h1 {
+        font-size: 2em;
+        margin: 0;
+        font-weight: 100;
+    }
+
+    h1, div {
+        display: table-cell;
+        width: 50%;
+        vertical-align: middle;
+    }
+
+    div {
+        text-align: right;
+        color: $color-favorites;
     }
 }
 
@@ -38,7 +53,7 @@ $topbar-height: 50px;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    background: #efefef;
+    background: linear-gradient(to bottom, rgba(107,57,198,1) 0%, rgba(240,163,185,1) 100%);
 
     .photocolumn {
         width: 25%;
@@ -49,16 +64,63 @@ $topbar-height: 50px;
         background: white;
         margin: 5px;
         padding: 20px;
-        box-shadow: 0 0 2px rgba(0,0,0,0.35);
+        border-radius: 2px;
+        box-shadow: 0 0 6px rgba(0,0,0,0.35);
+        cursor: pointer;
         opacity: 0;
-        transition: opacity 0.2s ease-in-out;
+        transition: all 0.4s ease-in-out;
 
         img {
             width: 100%;
         }
 
+        .image-wrapper {
+            position: relative;
+        }
+
+        .view-count {
+            position: absolute;
+            width: 100%;
+            height: calc(100% - 4px); // magic number to make height the same as the image
+            opacity: 0;
+            text-align: center;
+            overflow: hidden;
+            color: white;
+            background: rgba(0,0,0,0.5);
+            transition: all 0.4s ease-in-out;
+
+            > span {
+                pointer-events: none;
+                display: block;
+                top: 45%;
+                position: relative;
+                transform: translateY(-200px);
+                transition: all 0.3s ease-in-out;
+            }
+
+            &:hover {
+                opacity: 1;
+                transition: all 0.4s 1s ease-in-out;
+
+                > span {
+                    transform: translateY(0);
+                    transition: all 0.3s 1s ease-in-out;
+                }
+            }
+        }
+
+        .name {
+            text-align: center;
+            font-weight: 300;
+        }
+
         &.loaded {
             opacity: 1;
+        }
+
+        &.favorited {
+            color: white;
+            background: $color-favorites;
         }
     }
 }

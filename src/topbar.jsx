@@ -5,6 +5,7 @@ export default class TopBar extends React.PureComponent {
     return (
       <nav className="topbar">
         <h1>Popular on 500px</h1>
+        <div>Favorites: {this.props.favoritesCount}</div>
       </nav>
     );
   }
