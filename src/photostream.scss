@@ -5,11 +5,16 @@
     position: relative;
     top: $topbar-height;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1800px;
     margin: 0 auto;
 
-
-    .photocolumn {
-        width: 25%;
+    // Size the photocolumns based on the number of columns. Despite using flexbox to lay out the columns,
+    // we do still want to have them with fixed sizes otherwise we get weird shuffling effects when the
+    // photos load
+    @for $i from 1 through 4 {
+        > div:first-child:nth-last-child(#{$i}),
+        > div:first-child:nth-last-child(#{$i}) ~   div {
+            width: #{100% / $i}
+        }
     }
 }

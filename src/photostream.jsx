@@ -21,12 +21,12 @@ export default class PhotoStream extends React.Component {
   componentDidMount() {
     // load the first page of photos
     this.fetchPhotos(1);
-    // Add a throttled onscroll function to the window to fetch more photos
+    // Add a throttled on scroll function to the window to fetch more photos
     const self = this;
     function onScrollFn() {
       const scrollAmountRemaining = 0 + document.documentElement.offsetHeight - window.pageYOffset
         - document.documentElement.clientHeight;
-      if (scrollAmountRemaining < 300) {
+      if (scrollAmountRemaining < 800) {
         self.fetchPhotos(self.state.pageLoaded + 1);
       }
     }
@@ -37,12 +37,12 @@ export default class PhotoStream extends React.Component {
     const url = new URL(this.props.endpoint);
     const params = {
       consumer_key: this.props.consumerKey,
-      // feature: 'popular',
-      username: 'seanarcher',
+      exclude: 'Nude', // let's keep this SFW shall we
+      feature: 'popular',
+      image_size: 4, // 900px on the longest edge
       page,
       rpp: 40,
-      sort: 'date_created',
-      image_size: 4 // 900px on the longest edge
+      sort: 'date_created'
     };
     const self = this;
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
@@ -69,11 +69,9 @@ export default class PhotoStream extends React.Component {
 
   mapPhotoColumns(photosToMap) {
     const mappedPhotos = [];
-    // define number of columns
-    const columnCount = 4;
     // We want to populate each column one at a time, can use array of arrays
     const photoColumns = [];
-    for (let i = 0; i < columnCount; i++) {
+    for (let i = 0; i < this.props.columnCount; i++) {
       mappedPhotos.push([]);
       photoColumns.push(<PhotoColumn
         key={i}
@@ -82,7 +80,7 @@ export default class PhotoStream extends React.Component {
       />);
     }
     photosToMap.forEach((photo, index) => {
-      const indexToPopulate = index % columnCount;
+      const indexToPopulate = index % this.props.columnCount;
       mappedPhotos[indexToPopulate].push(photo);
     });
     return photoColumns;
@@ -99,9 +97,10 @@ export default class PhotoStream extends React.Component {
 }
 
 PhotoStream.propTypes = {
-  favoritesCountCallback: React.PropTypes.func.isRequired,
-  endpoint: React.PropTypes.string.isRequired,
+  columnCount: React.PropTypes.number.isRequired,
   consumerKey: React.PropTypes.string.isRequired,
+  endpoint: React.PropTypes.string.isRequired,
+  favoritesCountCallback: React.PropTypes.func.isRequired
 };
 
 

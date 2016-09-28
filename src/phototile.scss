@@ -39,6 +39,7 @@
             transition: all 0.3s ease-in-out;
         }
 
+        // Add a 1s delay when hovering over an image so the user can scroll without triggering the view count
         &:hover {
             opacity: 1;
             transition: all 0.4s 1s ease-in-out;

@@ -5,9 +5,10 @@
 }
 
 body {
-    font-family: 'Roboto Slab', serif;
+    font-family: $fonts-family-main;
     margin: 0;
     user-select: none;
+    color: $color-text;
 }
 
 .app-main {
@@ -24,14 +25,17 @@ body {
     top: 0;
     z-index: 2;
     padding: 0 20px;
-    color: #666;
     background: #f4f3ff;
     box-shadow: 0 5px 10px rgba(0,0,0,0.15);
 
     h1 {
-        font-size: 2em;
+        font-size: 1.5em;
         margin: 0;
         font-weight: 100;
+
+        @media screen and (min-width: 700px) {
+            font-size: 2em;
+        }
     }
 
     h1, div {
